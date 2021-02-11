@@ -1,0 +1,28 @@
+<html>
+  <head>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      let socket = io();
+      let el;
+
+      socket.on('chat', (timeString) => {
+        el = document.getElementById('server-time');
+        el.innerHTML = 'Server time: ' + timeString;
+      });
+
+      socket.on("update", function(msg) {
+          //if (ready) {
+              $('.chat').append('<li class="info">' + msg + '</li>')
+          //}
+      });
+
+      function enviar(){
+        socket.emit("chat", 'Uma mensagem');
+      }
+    </script>
+  </head>
+  <body>
+    <button onclick="enviar()" >enviar</button>
+    <p id="server-time"></p>
+  </body>
+</html>
